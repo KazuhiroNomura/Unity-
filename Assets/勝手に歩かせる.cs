@@ -10,7 +10,9 @@ public class 勝手に歩かせる : MonoBehaviour
     void Start()
     {
         var agent = this.NavMeshAgent=this.GetComponent<NavMeshAgent>();
-        var Sphere=GameObject.Find("Sphere");
+        var Sphere = GameObject.Find("Sphere");
+        var unitychan_dynamic = GameObject.Find("unitychan_dynamic");
+        //unitychan_dynamic.cop
         //agent.SetDestination(Sphere.transform.position);
         //agent.Move(new Vector3(10,10));
         //agent.transform.position=Sphere.transform.position;//瞬間移動
@@ -20,13 +22,12 @@ public class 勝手に歩かせる : MonoBehaviour
     void Update()
     {
         if(Input.GetMouseButtonDown(0)) {
-            RaycastHit hit;
-
-            if(Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition),out hit,100)) {
-                if(this.NavMeshAgent.pathStatus!=NavMeshPathStatus.PathInvalid) {
-                    this.NavMeshAgent.SetDestination(hit.point);
-                }
+            if(Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition),out var hit,100)&&this.NavMeshAgent.pathStatus!=NavMeshPathStatus.PathInvalid) {
+                this.NavMeshAgent.SetDestination(hit.point);
             }
+        } else if(Input.GetMouseButtonDown(1)) {
+            var 目標 = GameObject.Find("目標");
+            this.NavMeshAgent.SetDestination(目標.transform.position);
         }
     }
 }
